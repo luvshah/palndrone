@@ -7,6 +7,9 @@ public class GyroCam : MonoBehaviour
 {
   
     public Transform Body;
+    public GameObject fps_anchor;
+    public GameObject tps_anchor;
+
    //public PlayerInput input;
     public float sensitivitiy = 100.0f;
     public float xrot = 0f;
@@ -17,15 +20,15 @@ public class GyroCam : MonoBehaviour
     public float distanceToTank = 50;
     public bool isTeathered = true;
     
-    public CameraBaseState currecntcamState;
-   // public CamFPSState C_FPS_State = new CamFPSState();
+    public CameraBaseState currentcamState;
+    public CamFPSCannon C_FC = new CamFPSCannon();
    
     //drone tps mode
-   // public CamNormalState C_NormalState = new CamNormalState();
-    public CamRocketState C_RocketState = new CamRocketState();
-    public CamMortarState C_MortarState = new CamMortarState();
-    public CamUnhookedState C_UnhookedState = new CamUnhookedState();
-    public CamDisabledState C_DisabledState = new CamDisabledState();
+      public CamTPSCannon C_TC = new CamTPSCannon();
+    //public CamRocketState C_RocketState = new CamRocketState();
+    //public CamMortarState C_MortarState = new CamMortarState();
+    //public CamUnhookedState C_UnhookedState = new CamUnhookedState();
+    //public CamDisabledState C_DisabledState = new CamDisabledState();
 
     private void ToggleCamPosition()
     {
@@ -47,8 +50,10 @@ public class GyroCam : MonoBehaviour
        // inputactions.Enable();
         camrot = transform.localRotation.eulerAngles;
         Debug.Log("FPS cam State");
-       // currecntcamState = C_FPS_State;
-        currecntcamState.EnterState(this);
+        currentcamState = C_FC;
+        currentcamState.EnterState(this);
+        fps_anchor = GameObject.FindGameObjectWithTag("FPS_cam_anchor");
+        tps_anchor = GameObject.FindGameObjectWithTag("TPS_cam_anchor");
     }
 
     // Update is called once per frame
@@ -71,14 +76,14 @@ public class GyroCam : MonoBehaviour
         //Body.Rotate(0f,-Input.gyro.rotationRateUnbiased.y + inputmove.x,0f);
 
         //check state
-        currecntcamState.UpdateState(this);
+        currentcamState.UpdateState(this);
 
         //brakeys FPS TUT
       
     }
     public void SwitchState(CameraBaseState state)
     {
-        currecntcamState = state;
+        currentcamState = state;
         state.EnterState(this);
     }
 }

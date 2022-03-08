@@ -13,12 +13,12 @@ public class PlayerStateManager : MonoBehaviour
 
 
     //
-    
+    [SerializeField] private PlayerInput playercontroller;
     private CharacterController CharacterControllerTank;
     public GameObject cannonBallPrefab;
-    public GameObject rocketPrefab;
-    public GameObject mortarshellPrefab;
-    public Transform prjectileSpawnPoint;
+   // public GameObject rocketPrefab;
+    //public GameObject mortarshellPrefab;
+    public Transform projectileSpawnPoint;
 
     void Start()
     {
